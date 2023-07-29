@@ -1,15 +1,14 @@
 from deck import *
+from playGame import *
+from cardRenders import *
 from InquirerPy import inquirer
 
 
-
 def main():
-    file = open('header.txt', 'r', encoding='utf-8')
+
+    file = open('./assets/header.txt', 'r', encoding='utf-8')
     header = file.read()
     print(header)
-
-    # current_deck = Deck()  # test 
-    # current_deck.showDeck()
 
     final_confirm = "No"
     choice = mainMenu()
@@ -19,7 +18,7 @@ def main():
             playGame()
         elif choice == 'Leaderboard':
             print("LEADERBOARD UNDER CONSTRUCTION")
-        else: # never enter this
+        else:
             final_confirm = inquirer.select(
                 message="Are you sure you want to quit?",
                 choices=["Yes", "No"]
@@ -33,34 +32,39 @@ def main():
     exitGame()
 
 
-
 def mainMenu():
-    fav_lang = inquirer.select(
+    selection = inquirer.select(
         message="Welcome to Blackjack! Select:",
         choices=["Start Game", "Leaderboard", "Exit"],
     ).execute()
     confirm = inquirer.confirm(message="Confirm?").execute()
 
     while not confirm:
-        fav_lang = inquirer.select(
+        selection = inquirer.select(
             message="",
             choices=["Start Game", "Leaderboard", "Exit"],
         ).execute()
         confirm = inquirer.confirm(message="Confirm?").execute()
 
-    return fav_lang
+    return selection
 
 def playGame():
     playing = True
+
+    game = Game()
+    game.dealersHand()
+    game.playersHand()
+
     choice = gameOptions()
     while playing:
         if choice == "Hit":
             print("HIT UNDER CONSTRUCTION")
         elif choice == "Bet":
-            bet = int(input("Enter your bet (whole numbers only): $"))
-            print("You bet $" + str(bet))
+            game.bet()
+            
         elif choice == "Stay":
             print("STAY UNDER CONSTRUCTION")
+            # dealer's turn algorithm
         else:
             final_confirm = inquirer.select(
                 message="Are you sure you want to quit playing the game? You \n will be brought back to the Main Menu.",
@@ -88,7 +92,7 @@ def viewLeaderboard():
     pass
 
 def exitGame():
-    file = open('closingMessages.txt', 'r', encoding='utf-8')
+    file = open('./assets/closingMessages.txt', 'r', encoding='utf-8')
     exitMsg = file.read()
     print(exitMsg)
 

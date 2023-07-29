@@ -1,15 +1,21 @@
+import random
+
+
 class Card:
-    def __init__(self, suit, value, num_value, location):
+    def __init__(self, suit, value, points, location="DECK"):
         """
-        Creates a card with a suit, value, and its current location.
+        :param suit: The face of the card, e.g. Spade or Diamond
+        :param value: The value of the card, e.g 3 or King
         """
-        self._suit = suit
+        self._suit = suit.capitalize()
         self._value = value
-        self._num_value = num_value
+        self._points = points
         self._location = location
 
+    # TEST FUNCTION
+    # remove?
     def __repr__(self): 
-        return "Card suit:% s value:% s num_value:% s location:% s" % (self._suit, self._value, self._num_value, self._location) 
+        return "Card suit:% s value:% s points:% s location:% s" % (self._suit, self._value, self._points, self._location) 
 
     def get_suit(self):
         return self._suit
@@ -22,20 +28,41 @@ class Card:
     
 
 class Deck:
-
     def __init__(self):
         # create deck full of Card objects
-        self._values = { "2": 2, "3": 3, "4": 4, "5": 5, "6": 6, "7": 7, "8": 8, "9": 9, "10": 10, "J": 10, "Q": 10, "K": 10, "A": 11}
-        self._suits = ["\u2663", "\u2665", "\u2666", "\u2660"]  # unicode symbols for clubs, hearts, diamonds, spades
+        self.card_values = {
+            'Ace': 11,  # ace default value is 11, change to 1 when needed
+            '2': 2,
+            '3': 3,
+            '4': 4,
+            '5': 5,
+            '6': 6,
+            '7': 7,
+            '8': 8,
+            '9': 9,
+            '10': 10,
+            'Jack': 10,
+            'Queen': 10,
+            'King': 10
+        }
+        self._suits = ["\u2660", "\u2665", "\u2666", "\u2663"]  # unicode symbols for spades, hearts, diamonds, clubs
         self._deck = []
 
         for suit in self._suits:
-            for key in self._values:
-                self._deck.append(Card(suit, key, self._values[key], "DECK"))
+            for key in self.card_values:
+                self._deck.append(Card(suit, key, self.card_values[key]))
 
+    def shuffleDeck(self):
+        for i in range(random.randint(1,3)):
+            random.shuffle(self._deck)  # shuffle the deck a random amount of times, between 1-3 (inclusive)
+
+    # TEST FUNCTION
     def showDeck(self):
         count = 0
         for card in self._deck:
             print([card])
             count += 1
         print("There are", count, "cards")
+
+    def getACard(self):
+        return self._deck.pop()
