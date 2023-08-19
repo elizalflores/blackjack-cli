@@ -1,0 +1,38 @@
+### Example requests for /api/shuffle ###
+
+#### Request 1: Shuffle a single deck
+GET http://localhost:5000/api/shuffle?numDecks=1
+
+#### Request 2: Shuffle three decks
+GET http://localhost:5000/api/shuffle?numDecks=2
+
+#### Request 3: Shuffle ten decks
+GET http://localhost:5000/api/shuffle?numDecks=10
+
+
+### Example requests for /api/reshuffle ###
+
+#### Request 1: Reshuffle the deck
+PUT http://localhost:5000/api/reshuffle
+Content-Type: application/json
+
+{
+  "cards": ["H1", "C4", "D6", "H13", "S8", "H1", "C4", "D6", "H13", "S8"]
+}
+
+#### Request 2: Reshuffle a custom deck
+PUT http://localhost:5000/api/reshuffle
+Content-Type: application/json
+
+{
+  "cards": ["C3", "D5", "S7", "H9", "C11", "D13", "S1", "H3", "C5", "D7", "S9", "H11", "C13", "D1", "S3", 
+            "H5", "C7", "D9", "S11", "H13", "C1", "D3", "S5", "H7", "C9", "D11", "S13", "H1", "C2", "D4"]
+}
+
+#### Request 3: Reshuffle an empty deck
+PUT http://localhost:5000/api/reshuffle
+Content-Type: application/json
+
+{
+  "cards": []
+}

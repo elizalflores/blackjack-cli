@@ -7,7 +7,7 @@ class Card:
         :param suit: The face of the card, e.g. Spade or Diamond
         :param value: The value of the card, e.g 3 or King
         """
-        self._suit = suit.capitalize()
+        self._suit = suit
         self._value = value
         self._points = points
         self._location = location
@@ -23,38 +23,28 @@ class Card:
     def get_value(self):
         return self._value
     
+    def get_points(self):
+        return self._points
+    
     def get_location(self):
         return self._location
     
+    def set_points(self, points):
+        self._points = points  # USE CASE: Converting Ace from 11 to 1 when needed
+    
 
 class Deck:
-    def __init__(self):
-        # create deck full of Card objects
-        self.card_values = {
-            'Ace': 11,  # ace default value is 11, change to 1 when needed
-            '2': 2,
-            '3': 3,
-            '4': 4,
-            '5': 5,
-            '6': 6,
-            '7': 7,
-            '8': 8,
-            '9': 9,
-            '10': 10,
-            'Jack': 10,
-            'Queen': 10,
-            'King': 10
-        }
-        self._suits = ["\u2660", "\u2665", "\u2666", "\u2663"]  # unicode symbols for spades, hearts, diamonds, clubs
+    def __init__(self, deck):
         self._deck = []
 
-        for suit in self._suits:
-            for key in self.card_values:
-                self._deck.append(Card(suit, key, self.card_values[key]))
-
-    def shuffleDeck(self):
-        for i in range(random.randint(1,3)):
-            random.shuffle(self._deck)  # shuffle the deck a random amount of times, between 1-3 (inclusive)
+        for card in deck:
+            suit, rank = card.split(" ")
+            if rank == "Ace":
+                self._deck.append(Card(suit, rank, 11))
+            elif rank == "Jack" or rank == "Queen" or rank == "King":
+                self._deck.append(Card(suit, rank, 10))
+            else:
+                self._deck.append(Card(suit, rank, int(rank)))
 
     # TEST FUNCTION
     def showDeck(self):
@@ -66,3 +56,13 @@ class Deck:
 
     def getACard(self):
         return self._deck.pop()
+    
+    def getDeckSize(self):
+        return len(self._deck)
+
+    def convertToArray(self):
+        deck_array = []
+        for card in self._deck:
+            deck_array.append(str(card.get_suit()) + " " + str(card.get_value()))
+        deck_array.sort()
+        return deck_array
