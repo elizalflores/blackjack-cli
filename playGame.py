@@ -118,7 +118,7 @@ class Game():
         for card in total_cards:  # add non ace cards first
             temp_total += card.get_points()
 
-        for card in aces:  # add ace card(s), changing the points to 1 if 11 leads to a bust
+        for card in aces:  # add ace card(s), changing its points to 1 if 11 leads to a bust
             if (temp_total + card.get_points()) > 21:
                 card.set_points(1)
             temp_total += card.get_points()
@@ -231,8 +231,6 @@ class Game():
 
     def reshuffleDeck(self, deck):
         try:
-            # deck should be the discard pile, which is already an array
-            # self._playing_deck = self.reshuffleDeck(self._playing_deck.convertToArray())
             headers = {'Content-Type': 'application/json'} 
             request_body = json.dumps({"cards": deck})
             response = requests.put(f'{url}reshuffle', data=request_body, headers=headers).json()

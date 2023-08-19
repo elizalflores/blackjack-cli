@@ -4,7 +4,7 @@ from cardRenders import *
 from leaderboard import *
 from InquirerPy import inquirer
 
-leaderboard = Leaderboard()
+leaderboard = Leaderboard()  # global variable to show/access leaderboard in different game modes
 
 def main():
     file = open('./assets/header.txt', 'r', encoding='utf-8')
@@ -93,10 +93,7 @@ def playGame():
         game.gameStatus()
 
     choice = gameOptions()
-    while game.get_person("Dealer").get_wins() <= 3:
-        # if game.get_person("Player").get_total() == 21:  # lucky first blackjack
-        #     game.lucky21()
-
+    while choice != "Quit":
         if choice == "Hit":
             game.hit(game.get_person("Player"))
             game.calculateHandTotal(game.get_person("Player"))
@@ -124,7 +121,9 @@ def playGame():
         game.gameStatus()
         choice = gameOptions()
 
-    print("Game over! Here's your total wins:", game.get_person("Player").get_wins())
+    if choice != "Quit": # game was played, wins exist
+        print("Game over! Here's your total wins:", game.get_person("Player").get_wins())
+
     return gameOver(game.get_person("Player").get_wins())  # return T/F choice to play again
 
 def gameOptions():

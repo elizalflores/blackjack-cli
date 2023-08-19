@@ -10,10 +10,10 @@ class Leaderboard:
             {"KEV" : 7},
             {"EVA" : 6},
             {"ELI" : 5},
-            {"RCH" : 0},
-            {"JSN" : 4},
-            {"VIC" : 3},
-            {"AAA" : 2}
+            {"RCH" : 4},
+            {"JSN" : 3},
+            {"VIC" : 2},
+            {"AAA" : 1}
         ]
 
     def get_leaderboard(self):
