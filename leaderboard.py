@@ -13,7 +13,7 @@ class Leaderboard:
             {"RCH" : 0},
             {"JSN" : 4},
             {"VIC" : 3},
-            {"AAA" : 2}
+            {"MAN" : 2}
         ]
 
     def get_leaderboard(self):
